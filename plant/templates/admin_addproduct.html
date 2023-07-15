@@ -1,0 +1,65 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+    <h1>Add Product Variant</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Product Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="shortdescription">Short description</label>
+                    <input type="text" class="form-control" id="shortdescription" name="shortdescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="created_at">Created At</label>
+                    <input type="datetime-local" class="form-control" id="created_at" name="created_at" required>
+                </div>
+                <div class="form-group">
+                    <label for="updated_at">Updated At</label>
+                    <input type="datetime-local" class="form-control" id="updated_at" name="updated_at" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input type="text" class="form-control" id="category" name="category" required>
+                </div>
+                
+                
+                <div class="form-group">
+                    <label for="model_name">Model Name</label>
+                    <input type="text" class="form-control" id="model_name" name="model_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="color">Color variant</label>
+                    <input type="text" class="form-control" id="color" name="color" required>
+                </div>
+                <div class="form-group">
+                    <label for="store_price">Store Price</label>
+                    <input type="number" class="form-control" id="store_price" name="store_price" required>
+                </div>
+                <div class="form-group">
+                    <label for="sale_price">Sale Price</label>
+                    <input type="number" class="form-control" id="sale_price" name="sale_price" required>
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" class="form-control" id="stock" name="stock" required>
+                </div>
+                
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="images">Variant Images</label>
+                    <input type="file" class="form-control-file" id="images" name="images" multiple required>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">SUBMIT</button>
+    </form>
+</div>
+{% endblock %}

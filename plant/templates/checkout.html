@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% load static %}
+
+<!-- Shopping Cart -->
+<br>
+
+<form class="bg0 p-t-75 p-b-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-7 m-auto mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Selected Address
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user_address.first_name }} {{ user_address.last_name }}</h5>
+                        <p class="card-text">{{ user_address.email }}</p>
+                        <p class="card-text">
+                            {{ user_address.address_line_1 }}<br>
+                            {{ user_address.city }}, {{ user_address.state }},<br>
+                            {{ user_address.country }}, {{ user_address.postal_code }}
+                        </p>
+                        <p class="card-text">Ph: {{ user_address.phone_number }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-10 col-lg-7 col-xl-5 m-auto mb-4">
+                <div class="card p-4">
+                    <h4 class="m-0 pb-3">
+                        Cart Totals
+                    </h4>
+
+                    <div class="d-flex justify-content-between border-bottom pb-2">
+                        <span class="text-muted">Subtotal:</span>
+                        <span class="font-weight-bold">{{ carts.get_total_price }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span class="text-muted">Additional Charges:</span>
+                        <span class="font-weight-bold">$0</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between pt-3">
+                        <span class="text-dark font-weight-bold">Total:</span>
+                        <span class="font-weight-bold">{{ carts.get_total_price }}</span>
+                    </div>
+
+                    <div class="row pt-4">
+                        <div class="col">
+                            <a href="{% url 'placeorder' user_address.id %}" class="btn btn-primary btn-block" style="text-decoration: none;">
+                                Cash on Delivery
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

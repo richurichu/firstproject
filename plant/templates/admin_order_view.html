@@ -1,0 +1,26 @@
+{% extends 'admin_base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container mt-5 mb-5">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for orders in order %}
+            <tr>
+                <td>{{ orders.product }}</td>
+                <td>{{ orders.price }}</td>
+                <td>{{ orders.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

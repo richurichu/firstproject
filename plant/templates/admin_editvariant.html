@@ -1,0 +1,92 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container-fluid product-edit-variant" style="margin-top: 130px; margin-bottom: 20px;">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="product-detail-title fw-semibold mb-4 text-center">Edit Variant: {{ variant.model_name }}</h5>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="model_name" class="form-label">Model Name</label>
+                        <input type="text" class="form-control" id="model_name" name="model_name" value="{{ productt.model_name }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="model_number" class="form-label">Store price</label>
+                        <input type="text" class="form-control" id="store_price" name="store_price" value="{{ product.store_price }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="dial_shape" class="form-label">Sale price</label>
+                        <input type="text" class="form-control" id="sale_price" name="sale_price" value="{{ productt.sale_price }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="dial_shape" class="form-label">Stock</label>
+                        <input type="number" class="form-control" id="stock" name="stock" value="{{ productt.stock }}">
+                    </div>
+                   
+
+                    <div class="mb-3">
+                        <label for="color" class="form-label">Color</label>
+                        <select class="form-select" id="color" name="color">
+                            {% for colors in color %}
+                                <option value="{{ colors.id }}" {% if productt.color.id == colors.id %}selected{% endif %}>{{ colors.color }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                   
+                    <div class="mb-3">
+                        <label for="images" class="form-label">Images</label>
+                        <input type="file" class="form-control" id="images" name="images" multiple>
+                    </div>
+                    <div class="mb-3">
+                        <label for="existing_images" class="form-label">Existing Images</label>
+                        <div class="d-flex" id="existing-images-container">
+                            {% for image in images %}
+                                <div class="me-2">
+                                    <img src="{{  image.image.url }}" alt="Variant Image" width="100" height="100">
+                                </div>
+                            {% empty %}
+                                <p>No existing images</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Image preview functionality
+    function previewImages(input) {
+        var container = document.getElementById('existing-images-container');
+        container.innerHTML = '';
+
+        if (input.files && input.files.length > 0) {
+            for (var i = 0; i < input.files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var image = document.createElement('img');
+                    image.src = e.target.result;
+                    image.alt = 'Variant Image';
+                    image.width = 100;
+                    image.height = 100;
+                    container.appendChild(image);
+                };
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+    }
+
+    // Add event listener to the file input
+    var fileInput = document.getElementById('images');
+    fileInput.addEventListener('change', function() {
+        previewImages(this);
+    });
+</script>
+
+
+{% endblock %}

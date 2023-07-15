@@ -1,0 +1,76 @@
+{% extends 'admin_base.html' %}
+{% block body %}
+{% load static %}
+
+<style>
+    .container {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .col {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+    }
+
+    .btn-inline {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
+
+<!-- Shopping Cart -->
+<div class="container mt-5">
+    <form class="bg0 p-t-75 p-b-85">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <div class="wrap-table-shopping-cart">
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Order Id</th>
+                                    <th scope="col">Payment Status</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Payment Method</th>
+                                    <th scope="col">Order Date</th>
+                                    <th scope="col">Delivery Date</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <th scope="row">{{ order.id }}</th>
+                                    <td>{{ order.payment_status }}</td>
+                                    <td>{{ order.user.username }}</td>
+                                    <td>{{ order.payment_method }}</td>
+                                    <td>{{ order.order_date }}</td>
+                                    <td>{{ order.delivery_date }}</td>
+                                    <td>
+                                        <a class="btn btn-success btn-inline" href="{% url 'order_views' order.id %}" role="button">View</a>
+                                        <a class="btn btn-danger btn-inline" href="{% url 'cancel_order' order.id %}" role="button">Cancel</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+  {% block body %}
+
+   
+
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% for ban in banner %}
+          <div class="carousel-item active" data-bs-interval="10000">
+            <img src="{{ ban.image.url }}" class="d-block w-100" alt="...">
+          </div>
+          {% endfor %}
+         
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    
+      <div class="container mt-5">
+        <h2 class="text-center mb-5">Shop By Category</h2>
+        <hr>
+        <div class="row">
+            {% for category in cat %}
+            <div class="col-md-3">
+                <a href="{% url 'cat' slug=category.slug %}">
+                    <img src="{{ category.image.url }}" class="img-fluid" alt="{{ category.name }}">
+                  </a>
+                    <h4 class="mt-3">{{ category.name }}</h4>
+               
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+   
+
+  {%endblock%}
+

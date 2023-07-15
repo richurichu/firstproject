@@ -1,0 +1,60 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block body %}
+
+<div class="container-fluid" style="margin-top: 130px; margin-bottom: 20px;">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="cat-list-title fw-semibold mb-4 text-center">CATEGORIES</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">No.</th>
+                                <th scope="col" class="text-center">Category</th>
+                                <th scope="col" class="text-center">Image</th>
+                                <th scope="col" class="text-center">Banner</th>
+                                <th scope="col" class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in cat %}
+                            <tr>
+                                <th scope="row" class="text-center">{{ category.id }}</th>
+                                <td class="text-center">{{ category.name }}</td>
+                                <td class="text-center">
+                                    <img src="{{ category.image.url }}" alt="{{ category.name }} Image" width="80"
+                                        height="70">
+                                </td>
+                                <td class="text-center">
+                                    <img src="{{ category.bannerimage.url }}" alt="{{ category.name }} Image" width="120"
+                                        height="70">
+                                </td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="mb-2">
+                                            <a href="{% url 'edit_category' category.id %}" class="btn btn-warning btn-sm">EDIT</a>
+                                        </div>
+                                        {% if category.is_active %}
+                                        <div class="mb-2">
+                                            <a href="{% url 'disable_category' category.id %}" class="btn btn-danger btn-sm">DISABLE</a>
+                                        </div>
+                                        {% else %}
+                                        <div class="mb-2">
+                                            <a href="{% url 'enable_category' category.id %}" class="btn btn-success btn-sm">ENABLE</a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

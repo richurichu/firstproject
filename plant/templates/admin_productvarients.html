@@ -1,0 +1,65 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block body %}
+
+<div class="container-fluid" style="margin-top: 130px; margin-bottom: 20px;">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="cat-list-title fw-semibold mb-4 text-center">PRODUCT VARIANTS</h5>
+                    <div>
+                        <a href="{% url 'admin_addvarients' product.id %}" class="btn btn-success mb-4">Add Variant</a>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">No.</th>
+                                <th scope="col" class="text-center">Name</th>
+                                <th scope="col" class="text-center">Sale Price</th>
+                                <th scope="col" class="text-center">Variant</th>
+                                <th scope="col" class="text-center">Image</th>
+                                <th scope="col" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for variant in varients %}
+                                <tr>
+                                    <th scope="row" class="text-center">{{ variant.id }}</th>
+                                    <td class="text-center">{{ product.name }}</td>
+                                    <td class="text-center">{{ variant.sale_price }}</td>
+                                    <td class="text-center">{{ variant.color }}</td>
+
+                                    <td class="text-center">
+                                        <img src="{{ variant.images.first.image.url }}" alt="{{ product.name }} Image" width="80" height="70">
+                                    </td>
+                                   
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="mb-2">
+                                                <a href="{% url 'admin_editvarients' id=variant.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                            </div>
+                                            {% if variant.is_active %}
+                                                <div class="mb-2">
+                                                    <a href="{% url 'admin_disablevarients' id=variant.id %}" class="btn btn-danger btn-sm">DISABLE</a>
+                                                </div>
+                                            {% else %}
+                                                <div class="mb-2">
+                                                    <a href="{% url 'admin_enablevarients' id=variant.id %}" class="btn btn-success btn-sm">ENABLE</a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

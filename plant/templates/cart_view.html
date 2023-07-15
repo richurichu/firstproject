@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container">
+    <div class="breadcrumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+     
+      <h3 class="stext-109 cl4">Shopping Cart</h3>
+    </div>
+  </div>
+  
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+  
+  <!-- Shopping Cart -->
+  <div class="bg0 p-t-75 p-b-85">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-xl-7 m-lr-auto m-b-100">
+          <div class="m-l-25 m-r--38 m-lr-0-xl">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for carts in cart.cartitems_set.all  %}
+                  <tr>
+                    <td>
+                      <div class="how-itemcart1">
+                        <img src="{{ carts.product.images.first.image.url }}" alt="Product Image" style="height: 60px; width: 60px;">
+                      </div>
+                    </td>
+                    <td>{{ carts.product.product.name }}-{{carts.product.color}}</td>
+                    <td>$ {{ carts.product.sale_price }}</td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <button class="btn btn-sm btn-light" onclick="decreaseQuantity('{{ carts.id }}');">-</button>
+                        <input type="number" class="form-control quantity-input" id="qty{{ carts.id }}" step="1" min="1" max="300" name="quantity" value="{{ carts.quantity }}" onchange="updateQuantity('{{ carts.id }}', this.value);">
+                        <button class="btn btn-sm btn-light" onclick="increaseQuantity('{{ carts.id }}','{{ carts.product.stock }}');">+</button>
+                      </div>
+                    </td>
+                    <td>
+                      <form method="POST" action="{% url 'remove_from_cart'%}">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ carts.id }}">
+                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+  
+            <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+              <div class="flex-w flex-m m-r-20 m-tb-5">
+                <input class="form-control bor13 pl-3 pr-2 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
+                <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                  Apply Coupon
+                </div>
+              </div>
+              <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+                Update Cart
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+          <div class="border rounded p-4">
+            <h4 class="mtext-109 cl2 mb-4">Cart Totals</h4>
+            <div class="d-flex justify-content-between mb-3">
+              <span class="stext-110 cl2">Subtotal:</span>
+              <span class="mtext-110 cl2">$ {{ total_price }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+              <span class="stext-110 cl2">Shipping:</span>
+              <span class="mtext-110 cl2">0 tax</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span class="stext-101 cl2">Total:</span>
+              <span class="mtext-110 cl2">$ {{ total_price }}</span>
+            </div>
+            <div class="mt-4">
+              {% if total_price == 0 %}
+              <a href="" class="btn btn-lg btn-primary btn-block">Shop more</a>
+              {% else %}
+              <a href="{% url 'order_address' %}" class="btn btn-lg btn-success btn-block" >Proceed to Checkout</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+
+<script>
+  function updateQuantity(productId, quantity) {
+    $.ajax({
+      type: "POST",
+      url: "/update_quantity",  // Replace with the actual URL of your Django view
+      headers: { "X-CSRFToken": "{{ csrf_token }}" }, // Add this line to include the CSRF token
+      data: {
+          product_id: productId,
+          quantity: quantity
+        },
+        dataType: 'json',  // Expect JSON response from the server
+        success: function(response) {
+            console.log(response.price);
+            console.log(response.quantity);
+            if (response.success) {
+                // Update the displayed quantity and price
+                $("#price-" + productId).text(response.price);
+          $("#quantity-" + productId).text(response.quantity);
+          console.log("Quantity updated successfully!");
+          location.reload()
+        } else {
+          console.log("Quantity update failed:", response.message);
+        }
+      },
+      error: function(xhr, errmsg, err) {
+        console.log("Error updating quantity:", errmsg);
+      }
+    });
+}
+
+function decreaseQuantity(productId) {
+  var inputField = $("#qty" + productId);
+  var currentValue = parseInt(inputField.val());
+  if (currentValue > 1) {
+    var newValue = currentValue - 1;
+    inputField.val(newValue);
+    updateQuantity(productId, newValue);
+  }
+}
+
+function increaseQuantity(productId, stock) {
+    var effect = document.getElementById('qty' + productId);
+    var qty = parseInt(effect.value);
+  
+    if (!isNaN(qty) && qty < stock && qty < 10) {
+      qty++;
+      effect.value = qty;
+      updateQuantity(productId, qty);
+    } else {
+      alert("Maximum stock limit reached."); // Display a message when the maximum stock limit is reached
+    }
+  }
+
+</script> 
+
+
+
+{% endblock %}
