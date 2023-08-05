@@ -1,83 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'admin_base.html' %}
+{% load static %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>eCommerce Admin Panel</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    /* Custom Styles */
-    body {
-      background-color: #f8f9fa;
-    }
 
-    .sidebar {
-      background-color: #343a40;
-      color: #f8f9fa;
-      min-height: 100vh;
-    }
-
-    .sidebar .nav-link {
-      color: #f8f9fa;
-    }
-
-    .sidebar .nav-link:hover {
-      color: #ffc107;
-    }
-
-    .content {
-      padding: 20px;
-    }
-
-    h1 {
-      margin-top: 20px;
-      margin-bottom: 30px;
-    }
-  </style>
-</head>
+{% block body %}
+<style>
+  .fixed-width-btn {
+    width: 100px;  /* Adjust as needed */
+  }
+</style>
 
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-2 sidebar">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-home mr-2"></i>Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="customers"><i class="fas fa-list mr-2"></i>Customers</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="admin_catagory"><i class="fas fa-list mr-2"></i>Category</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-plus mr-2"></i>Add Category</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-cubes mr-2"></i>Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-plus mr-2"></i>Add Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-md-10 content">
-        <!-- Content area -->
+  
 
-<nav class="navbar navbar-light bg-secondary justify-content-between">
+<!-- <nav class="navbar navbar-light bg-secondary justify-content-between">
   <a class="navbar-brand">WELCOME</a>
-  <a href="/"><button class="btn btn-sm btn-primary" type="button">Home</button></a>
-  <a href="/create_user"><button class="btn btn-sm btn-primary" type="button">Add User</button></a>
-
-  <form class="form-inline" action="/admin_panel">
-    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</nav>
+  <a href="/"><button class="btn btn-sm btn-success" type="button">Home</button></a>
+ 
+</nav> -->
 
       <table class="table table-striped table-success ">
 
@@ -103,9 +42,9 @@
             <td>{{ user.is_superuser}}</td>
             <td>
               {% if user.is_active %}
-              <a class="btn btn-primary" href="{% url 'block_user' user.id %}">Block</a>
+              <a class="btn btn-primary fixed-width-btn" href="{% url 'block_user' user.id %}">Block</a>
             {% else %}
-              <a class="btn btn-danger" href="{% url 'unblock_user' user.id %}">Unblock</a>
+              <a class="btn btn-danger fixed-width-btn" href="{% url 'unblock_user' user.id %}">Unblock</a>
             {% endif %}
             
             </td>
@@ -126,10 +65,4 @@
     </div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script> <!-- Replace with your Font Awesome kit -->
-</body>
-
-</html>
+  {% endblock %}

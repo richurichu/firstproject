@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        .header h1 {
+            color: #007BFF;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        table th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        .details-box {
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            margin-top: 20px;
+        }
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .details-box {
+            flex: 1;
+            
+        }
+    </style>
+</head>
+<body>
+    
+        <h1>Yo</h1>
+        <!-- add your company logo -->
+        
+    
+    <h2>Order Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for orders in order_item %}
+            <tr>
+                <td>{{ orders.product }}</td>
+                
+                <td>{{ orders.price }}</td>
+                <td>{{ orders.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Order details box -->
+  <div class="details-container">
+    <div class="details-box">
+        <h2>Order Details</h2>
+        <p><strong>Order ID:</strong> {{ orderr.id }}</p>
+        <p><strong>Order Date:</strong> {{ orderr.order_date }}</p>
+        <p><strong>Original price:</strong> {{ orderr.original_price }}</p>
+        <p><strong>You have saved:</strong> {{ discount }}</p>
+        <p><strong>Coupon Discount :</strong> {{ orderr.coupon }}</p>
+        <p><strong>Order Total:</strong> {{ actuall_total }}</p>
+        {% if orderr.payment_status != 'CANCELLED' and orderr.payment_status != 'RETURNED' %}
+        <p><strong>Delivery Date:</strong> {{ orderr.delivery_date }}</p>
+        {% endif %}
+        <p><strong>Payment Method:</strong> {{ orderr.payment_method }}</p>
+        <p><strong>Order status:</strong><span class="font-weight-bold text-danger mx-2">{{ orderr.payment_status }}</span></p>
+    </div>
+
+    <!-- Order Address box -->
+    <div class="details-box">
+        <h2>Order Address</h2>
+        <p><strong>Name:</strong> {{ orderr.address.first_name }}</p>
+        <p><strong>Address:</strong> {{ orderr.address.address_line_1 }}</p>
+        <p><strong>City:</strong> {{ orderr.address.city }}</p>
+        <p><strong>Zip Code:</strong> {{ orderr.address.postal_code }}</p>
+        <p><strong>State:</strong> {{ orderr.address.state }}</p>
+    </div>
+ </div>
+</body>
+</html>

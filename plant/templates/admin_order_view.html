@@ -2,11 +2,48 @@
 {% block body %}
 {% load static %}
 
-<div class="container mt-5 mb-5">
-    <table class="table table-striped table-bordered">
+
+
+<style>
+ 
+    .address-box {
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 15px;
+        background-color: #f8f9fa;
+    }
+    .inline-boxes {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-4">Admin Order Manage </h1>
+    <hr>
+
+    <div class="dropdown  d-flex justify-content-end  ">
+        <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+         Change status
+        </button>
+      {% if view_order.payment_status != 'CANCELLED' and view_order.payment_status != 'RETURNED' %}
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url 'shipped' view_order.id %}">Shipped</a></li>
+          <li><a class="dropdown-item" href="{% url 'order_complete' view_order.id %}">Delivered</a></li>
+          
+          <li><a class="dropdown-item" href="{% url 'cancel_order' view_order.id %}">Cancel</a></li>
+        </ul>
+       {% endif %}
+      </div>
+    
+   
+    <h2>Order Products</h2>
+    <table class="table table-striped table-bordered mt-3">
         <thead class="thead-light">
             <tr>
                 <th scope="col">Product</th>
+                <th scope="col">Image</th>
                 <th scope="col">Price</th>
                 <th scope="col">Quantity</th>
             </tr>
@@ -15,12 +52,46 @@
             {% for orders in order %}
             <tr>
                 <td>{{ orders.product }}</td>
+                <td><img src="{{ orders.product.images.first.image.url }}" alt="{{ order.product.name }}" class="img-thumbnail" style="height:70px;width:70px;"></td>
                 <td>{{ orders.price }}</td>
                 <td>{{ orders.quantity }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- Div to display address and order details inline -->
+    <div class="inline-boxes mt-4">
+        <!-- Order details box -->
+        <div class="order-details">
+            <h2>Order Details</h2>
+            <p><strong>Order ID:</strong> {{ view_order.id }}</p>
+            <p><strong>Order Date:</strong>  {{ view_order.order_date }}</p>
+            {% if view_order.payment_status != 'CANCELLED' and view_order.payment_status != 'RETURNED' %}
+             <p><strong>Delivery Date:</strong> {{ view_order.delivery_date }}</p>
+            {% endif %}
+            <p><strong>Payment Method:</strong> {{ view_order.payment_method }}</p>
+            <p ><strong>Order status:</strong><span class="font-weight-bold text-danger mx-2">{{ view_order.payment_status }}</span></p>
+            
+            <!-- Submit button for processing the order -->
+            
+        </div>
+
+        <!-- Address box -->
+        <div class="address-box ml-4">
+            <h2>Order Address</h2>
+            <p><strong>Name:</strong>{{ view_order.address.first_name }}</p>
+            <p><strong>Address:</strong>{{ view_order.address.address_line_1 }}</p>
+            <p><strong>City:</strong>{{ view_order.address.city}}</p>
+            <p><strong>Zip Code:</strong> {{ view_order.address.postal_code }}</p>
+            <p><strong>State:</strong>{{ view_order.address.state }}</p>
+        </div>
+    </div>
+
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRkHpTFMp4+Ee5UTiWLPzQqYi+FvVscx4KdR2C9w8" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-vL3ng5Q3+4fBwBsg5k6XFu0X1fyOBiz9hUc9f/SLXMf8Q/yTHTpd03Rbeo5/7dj5" crossorigin="anonymous"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.3/dist/js/bootstrap.min.js"></script> -->
 
 {% endblock %}

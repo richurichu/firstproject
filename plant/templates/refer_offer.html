@@ -1,0 +1,58 @@
+<!-- referral_program.html -->
+{% extends 'base.html' %}  <!-- If you have a base template, otherwise skip this line -->
+{% load static %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Referral Program</h1>
+  
+    <!-- Description of the referral program -->
+    <div class="row mt-4">
+      <div class="col-md-8">
+        <p>
+          Our referral program allows you to earn rewards by inviting your friends to join our platform.
+          For every successful referral, you will receive a 10% bonus of the total purchase amount, up to ₹100.
+          Additionally, your friend will get a 5% bonus  up to ₹100 on his first purchase. 
+          There is no limit to the number of friends you can refer, so start inviting now and earn rewards!
+        </p>
+      </div>
+    </div>
+  
+    <!-- Display user's referral code -->
+    <div class="row mt-4">
+      <div class="col-md-8  bg-body-secondary">
+        <h4>Your Referral Code:</h4>
+        <p class="bg-gradient">{{ user.referral.referral_code }}</p>
+      </div>
+    </div>
+  
+    <!-- Display details of successful referrals -->
+    <div class="row mt-4">
+      <div class="col-md-8 bg-body-secondary">
+        <h4>Your Earnings from Successful Referrals:</h4>
+        <p class="bg-body-secondary">
+          Total Successful Referrals: {{ user.referral.referred_by.count }}
+        </p>
+        <p >
+          Your Earnings: ₹
+        </p>
+      </div>
+    </div>
+  
+    <!-- Display details of referrals referred by the user -->
+    <div class="row mt-4">
+      <div class="col-md-8  bg-body-secondary">
+        <h4>Successfully Referred Users:</h4>
+        {% if user.referrals.exists %}
+        <ul>
+          {% for referral in user.referrals.all %}
+          <li>{{ referral.user.username }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p>No successful referrals yet.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

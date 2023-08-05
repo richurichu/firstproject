@@ -11,5 +11,9 @@ urlpatterns = [
     # path('verification-mail-sent/',views.verification_mail_sent,name='verification_mail_sent'),
     path('otp_login',views.otp_login,name='otp_login'),
 
+    path('forgot_password',views.forgot_password,name='forgot_password'),
+    path('otp_forgot_password',views.otp_forgot_password,name='otp_forgot_password'),
+    path('reset_password',views.reset_password,name='reset_password'),
+
 
 ]

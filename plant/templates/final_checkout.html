@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+  /* Custom CSS styles */
+  .checkout-container {
+    margin-top: 120px;
+    background-color: #0B1C39;
+    margin-bottom: 10px;
+    font-family: 'Josefin Sans', sans-serif;
+  }
+
+  .address-card {
+    margin-bottom: 20px;
+    margin-top:20px;
+    padding: 10px;
+    height:500px;
+    background-color: #EDF1FF;
+  }
+
+  .address-card .card-text {
+    margin-bottom: 5px;
+  }
+
+  .address-card .btn-choose {
+    border-color: #0B1C39;
+    background-color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+
+  .address-card .btn-choose:hover {
+    background-color: #FF2020;
+  }
+
+  .order-summary {
+    border: solid #0B1C39;
+    background-color: #EDF1FF;
+    padding: 10px;
+  }
+
+  .order-summary .subtotal,
+  .order-summary .shipping-charge,
+  .order-summary .total {
+    margin-bottom: 5px;
+  }
+
+  .order-summary span {
+    display: inline-block;
+    width: 120px;
+  }
+
+  .order-summary button {
+    margin-top: 10px;
+  }
+</style>
+
+
+{% for msg in messages %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      {% if msg.tags == 'error' %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {% elif msg.tags == 'success' %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {% else %}
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {% endif %}
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+<div class="container">
+  <div class="row">
+      <div class="col-lg-10 col-xl-7 m-auto ">
+          <div class="card">
+              <div class="card-header">
+                  Selected Address
+              </div>
+              <div class="card-body">
+                  <h5 class="card-title">{{ user_address.first_name }} {{ user_address.last_name }}</h5>
+                  <p class="card-text">{{ user_address.email }}</p>
+                  <p class="card-text">
+                      {{ user_address.address_line_1 }}<br>
+                      {{ user_address.city }}, {{ user_address.state }},<br>
+                      {{ user_address.country }}, {{ user_address.postal_code }}
+                  </p>
+                  <p class="card-text">Ph: {{ user_address.phone_number }}</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-sm-10 col-lg-7 col-xl-5 mt-5">
+          <div class="card p-4">
+              <h4 class="m-0 pb-3">
+                  Cart Totals
+              </h4>
+
+              <div class="d-flex justify-content-between border-bottom pb-3">
+                  <span class="text-muted">Subtotal:</span>
+                  <span class="font-weight-bold">{{ total_price }}</span>
+              </div>
+
+              <div class="d-flex justify-content-between border-bottom pb-3">
+                <span class="text-muted">Coupon:</span>
+                <span class="font-weight-bold">{{ coupon }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between border-bottom pb-3">
+              <span class="text-muted">Total:</span>
+              <span class="font-weight-bold">{{ final }}</span>
+          </div>
+
+              <div class="d-flex justify-content-between border-bottom py-3">
+                  <span class="text-muted">Shipping charge:</span>
+
+                  {% if carts.get_total_price >= 500 %}
+                  <span class="font-weight-bold" style="color: green;">Free Delivery</span>
+                  {% else %}
+                 
+                  <span class="font-weight-bold">Rs 40 </span> 
+                  
+                  {% endif %}
+              </div>
+
+              <div class="d-flex justify-content-between pt-3 p-2">
+                  <span class="text-dark font-weight-bold">Final :</span>
+                  <span class="font-weight-bold">{{ total_price_delivery }}</span>
+              </div>
+              
+
+              <div class="row pt-4 ">
+                <div>
+                  <input type="radio" name="paymentOption" id="upi" value="upi" checked>
+                  <label for="upi">UPI</label>
+                  <input type="radio" name="paymentOption" id="cod" value="cod">
+                  <label for="cod">Cash on Delivery</label>
+                  <br>
+                  <button class="btn btn-block mt-4" id="proceedBtn" style="background-color:#157d14; color:white;">Proceed to Payment</button>
+              </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+      
+    <!-- <div>
+        <input type="radio" name="paymentOption" id="upi" value="upi" checked>
+        <label for="upi">UPI</label>
+        <input type="radio" name="paymentOption" id="cod" value="cod">
+        <label for="cod">Cash on Delivery</label>
+        <br>
+        <button class="btn btn-block" id="proceedBtn" style="background-color:#157d14; color:white;">Proceed to Payment</button>
+    </div> -->
+    
+  </div>
+</div>
+
+</div>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    // Assign Django variables to JavaScript variables
+    var csrfToken = "{{ csrf_token }}";
+    var staticURL = "{% static 'user/img/logo1.png' %}";
+    var selectedAddressId = "{{ user_address.id }}";
+    var placeOrderURL = "{% url 'placeorder' user_address.id  %}";
+   
+
+    function initiateRazorpayPayment() {
+        $.ajax({
+            type: "POST",
+            
+            url: "/initiate_payment",
+            headers: { "X-CSRFToken": csrfToken },
+            dataType: 'json',
+            success: function(response) {
+                var options = {
+                    "key": response.key,
+                    "amount": response.amount,
+                    "currency": response.currency,
+                    "name": "TREK NEXSUS",
+                    "description": "Thank you for purchasing from us",
+                    "image": staticURL,
+                    "order_id": response.order_id,
+                    "handler": function (response) {
+                        var paymentId = response.razorpay_payment_id;
+                        var orderId = response.razorpay_order_id;
+                        var signature = response.razorpay_signature;
+                        $.ajax({
+                            type: "POST",
+                            url: "/online_payment_order/" + selectedAddressId + "/",
+
+                            headers: { "X-CSRFToken": csrfToken },
+                            data: {
+                                payment_id: paymentId,
+                                orderId: orderId,
+                                signature: signature
+                            },
+                            success: function(response) {
+                                window.location.href = placeOrderURL;
+                            },
+                            error: function(xhr, status, error) {
+                                alert("Error placing the order. Please try again.");
+                            }
+                        });
+                    },
+                    //...Rest of your options...
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.on('payment.failed', function(response) {
+                    //...Your alert messages...
+                });
+                rzp1.open();
+            },
+            error: function(xhr, status, error) {
+                alert("Error initiating payment. Please try again.");
+            }
+        });
+    };
+
+    document.getElementById("proceedBtn").addEventListener("click", function () {
+    var paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
+    if (paymentOption === "cod") {
+        window.location.href = placeOrderURL;
+    } else if (paymentOption === "upi") {
+        initiateRazorpayPayment();
+    } // Wallet payment option removed
+});
+</script>
+{% endblock %}

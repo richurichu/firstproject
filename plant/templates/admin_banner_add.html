@@ -1,0 +1,16 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block body %}
+<h1>Add Banner</h1>
+<form method="post" action="{% url 'add_banner' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" required>
+    <br>
+    <label for="image">Image:</label>
+    <input type="file" name="image" id="image" required accept="image/*">
+    <br>
+    <input class="btn-success" type="submit"  value="Add">
+</form>
+{% endblock %}

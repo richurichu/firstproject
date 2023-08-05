@@ -14,6 +14,9 @@ class Order(models.Model):
         ('CANCELLED','cancelled'),
         ('DELIVERED','Delivered'),
         ('SHIPPED','Shipped'),
+        ('RETURNED','Returned'),
+        ('ORDERED','Ordered'),
+        ('COMPLETED','Completed')
     ]
     PAYMENT_METHOD_CHOICES = [
         ('RAZORPAY', 'razorpay'),
@@ -22,12 +25,18 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.ForeignKey(User_address, on_delete=models.CASCADE)
     total_price = models.FloatField(null=False)
+    original_price = models.FloatField(null=True)
+    coupon=models.FloatField(null=True)
     payment_status = models.CharField(max_length=25, choices=PAYMENT_STATUS_CHOICES, default='ordered')
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES)
     message = models.TextField(null=True)
     tracking_no = models.CharField(max_length=150,null=True)
     order_date = models.DateTimeField(default=timezone.now)
     delivery_date = models.DateTimeField(blank=True, null=True)
+    razor_pay_order_id =models.CharField( max_length=150,null=True, blank=True)
+    razor_pay_payment_id =models.CharField( max_length=150,null=True, blank=True)
+    razor_pay_payment_signature =models.CharField( max_length=150,null=True, blank=True)
+
 
     def __str__(self):
         return f"{self.id, self.tracking_no}"
@@ -36,7 +45,7 @@ class Order(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.order_date:
-            self.order_date = timezone.now()  # Set the order date to the current time if it's not set
+            self.order_date = timezone.now()  
         if not self.delivery_date:
             self.delivery_date = self.order_date + timedelta(hours=24)
         super().save(*args, **kwargs)

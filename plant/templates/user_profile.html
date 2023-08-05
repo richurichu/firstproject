@@ -9,8 +9,7 @@
       <div class="col">
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="" style="color: #333;">Order</a></li>
-            <li class="breadcrumb-item"><a href="" style="color: #333;">Address</a></li>
+           
           </ol>
         </nav>
       </div>
@@ -28,7 +27,7 @@
             <p class="text-muted mb-1">User Profile</p>
             <p class="text-muted mb-4">{{user.email}}</p>
             <div class="d-flex justify-content-center mb-2">
-              <a href="" class="btn btn-dark" style="background-color: #1e5f0f; width: 200px; border-radius: 20px;">Logout</a>
+              <a href="change_password" class="btn btn-dark" style="background-color: #1e5f0f; width: 200px; border-radius: 20px;">Change Password</a>
             </div>
           </div>
         </div>
@@ -58,19 +57,25 @@
         {% if addresses %}
         <div class="text-right mb-3"> <!-- Add the text-right class here -->
           <div class="btn-group-vertical">
-            <a href="{% url 'show_address'%}" class="btn btn-primary" style="background-color: #1e5f0f; border-color: #0f1010;">My Address</a>
-            <br>
-            <a href="{% url 'orders' %}" class="btn btn-primary" style="background-color:#1e5f0f; border-color: #0f1010;">My Orders</a>
+            <a href="{% url 'show_address'%}" class="btn btn-primary btn-block mb-3" style="background-color: #1e5f0f; border-color: #0f1010;">My Address</a>
+            <a href="{% url 'view_wishlist' %}" class="btn btn-primary btn-block mb-3" style="background-color: #1e5f0f; border-color: #0f1010;">My Whislist</a>
+            <a href="{% url 'orders' %}" class="btn btn-primary btn-block mb-3" style="background-color:#1e5f0f; border-color: #0f1010;">My Orders</a>
+            <a href="{% url 'wallet' %}" class="btn btn-primary btn-block mb-3" style="background-color: #1e5f0f; border-color: #0f1010;">My Wallet </a>
+            <a href="{% url 'refer' %}" class="btn btn-primary btn-block mb-3" style="background-color: #1e5f0f; border-color: #0f1010;">Refer and Earn </a>
+
           </div>
         </div>
         {% else %}
         <div class="text-right mb-3"> <!-- Add the text-right class here -->
           <div class="btn-group-vertical">
-            <a href="{% url 'add_address'%}" class="btn btn-primary" style="background-color:#1e5f0f; border-color: #0f1010; ;">Add Address</a>
-            <a href="{% url 'orders' %}" class="btn btn-primary" style="background-color: #1e5f0f; border-color: #0f1010;">My Orders</a>
+            <a href="{% url 'add_address'%}" class="btn btn-primary btn-block mb-3" style="background-color:#1e5f0f; border-color: #0f1010; ;">Add Address</a>
+            <a href="{% url 'view_wishlist' %}" class="btn btn-primary btn-block mb-3" style="background-color: #1e5f0f; border-color: #0f1010;">My Whislist</a>
+            <a href="{% url 'wallet' %}" class="btn btn-primary btn-block mb-3" style="background-color: #1e5f0f; border-color: #0f1010;">My Wallet </a>
+            <a href="{% url 'refer' %}" class="btn btn-primary btn-block mb-3" style="background-color: #1e5f0f; border-color: #0f1010;">Refer and Earn </a>
+            <a href="{% url 'orders' %}" class="btn btn-primary btn-block mb-3" style="background-color: #1e5f0f; border-color: #0f1010;">My Orders</a>
           </div>
         </div>
-        {% endif %}
+        {% endif %} 
         
       </div>
     </div>

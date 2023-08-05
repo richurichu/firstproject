@@ -1,7 +1,35 @@
 {% extends 'base.html' %}
   {% block body %}
   {% load static %}
-  
+  <style>
+   .card-img-top {
+  transition: transform 0.3s ease;
+}
+
+.zoom-card:hover .card-img-top {
+  transform: scale(1.04);
+  /* You can adjust the scale factor (1.05 in this case) to control the amount of zoom */
+}
+
+/* Add some styling to the discount badge */
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 1;
+
+}
+.bi-star-fill {
+    color: rgb(249, 163, 14);
+}
+
+</style>
 
     <div>
         <!-- Banner -->
@@ -51,8 +79,8 @@
                         <div class="dropdown-menu" aria-labelledby="productCategoryDropdown">
                             <a class="dropdown-item" href="{% url 'cat' 'all' %}">All Plants</a>
                             <a class="dropdown-item" href="{% url 'cat' 'indoor-plants' %}">Indoor</a>
-                            <a class="dropdown-item" href="{% url 'cat' 'air-purifying' %}">Air-purifying</a>
-                            <a class="dropdown-item" href="{% url 'cat' 'low-light' %}">Low-light</a>
+                            <a class="dropdown-item" href="{% url 'cat' 'air-purifying' %}">Air-Purifying</a>
+                            <a class="dropdown-item" href="{% url 'cat' 'low-light' %}">Low-Light</a>
                             <a class="dropdown-item" href="{% url 'cat' 'succulents' %}">Succulent</a>
 
                         </div>
@@ -65,11 +93,10 @@
                             Sort By
                         </button>
                         <div class="dropdown-menu" aria-labelledby="sortByDropdown">
-                            <a class="dropdown-item" href="#">New Arrivals</a>
-                            <a class="dropdown-item" href="#">Alphabetically A-Z</a>
-                            <a class="dropdown-item" href="#">Alphabetically Z-A</a>
-                            <a class="dropdown-item" href="#">Price Low-High</a>
-                            <a class="dropdown-item" href="#">Price High-Low</a>
+                           
+                            <a class="dropdown-item" href="?sort=az">Alphabetically A-Z</a>
+                            <a class="dropdown-item" href="?sort=za">Alphabetically Z-A</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -83,14 +110,20 @@
         <div class="row">
             {% for product in products %}
             {% with variant=product.productvariant_set.all|random %}
-                <div class="col-md-3 mb-4">
-                    <div class="card">
+              {% with discount_tuple=variant.get_discounted_price %}
+                 <div class="col-md-3 mb-4">
+                    <div class="card zoom-card">
+                        {% if discount_tuple.1 %}
+                           <div class="discount-badge">
+                              <span>{{ discount_tuple.1 }}% OFF</span>
+                           </div>
+                        {% endif %}
                         <img src="{{ variant.images.first.image.url }}" class="card-img-top" alt="Product Image">
                         <div class="card-body">
                             <h5 class="card-title">{{ product.name }}</h5>
                         
                             <div class="rating">
-                                <div class="rating-stars">
+                                <div class="rating-stars ">
                                     <i class="bi bi-star-fill"></i>
                                     <i class="bi bi-star-fill"></i>
                                     <i class="bi bi-star-fill"></i>
@@ -112,8 +145,9 @@
 
                         </div>
                     </div>
-                </div>
-                {% endwith %}
+                  </div>
+               {% endwith %}
+             {% endwith %}
             {% endfor %} 
         </div>
     </div>

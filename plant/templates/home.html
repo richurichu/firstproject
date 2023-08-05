@@ -1,7 +1,38 @@
 {% extends 'base.html' %}
 {% load static %}
   {% block body %}
+  <style>
+    .zoom-category:hover img {
+        transform: scale(1.08);
+    }
 
+    .zoom-category img {
+        transition: transform 0.5s ease;
+    }
+
+    /* Rest of the CSS is the same */
+
+    .card-img-top {
+        transition: transform 0.3s ease;
+    }
+
+    .zoom-card:hover .card-img-top {
+        transform: scale(1);
+    }
+
+    .discount-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 6px;
+        background-color: red;
+        color: white;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 1;
+    }
+</style>
    
 
     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
@@ -27,16 +58,58 @@
         <h2 class="text-center mb-5">Shop By Category</h2>
         <hr>
         <div class="row">
-            {% for category in cat %}
-            <div class="col-md-3">
-                <a href="{% url 'cat' slug=category.slug %}">
-                    <img src="{{ category.image.url }}" class="img-fluid" alt="{{ category.name }}">
+          {% for category in cat %}
+              <div class="col-md-3 position-relative"> <!-- Add position-relative for absolute positioning of children -->
+                  <a href="{% url 'cat' slug=category.slug %}" class="d-block zoom-category"> <!-- Add d-block and zoom-category classes -->
+                      {% if category.discount %}
+                          <div class="discount-badge">
+                              <span>{{ category.discount }}% OFF</span>
+                          </div>
+                      {% endif %}
+                      <img src="{{ category.image.url }}" class="img-fluid" alt="{{ category.name }}">
                   </a>
-                    <h4 class="mt-3">{{ category.name }}</h4>
-               
-            </div>
-            {% endfor %}
-        </div>
+                  <h4 class="mt-3 text-capitalize text-center">{{ category.name }}</h4>
+              </div>
+          {% endfor %}
+      </div>
+
+      <div class="container mt-5">
+        <h2 class="text-center mb-5">Crazy Deals</h2>
+        <hr>
+        <div class="row">
+          {% for hot_deals_varients in hot_deals_varients %}
+              <div class="col-md-3 position-relative"> <!-- Add position-relative for absolute positioning of children -->
+                  <a href="" class="d-block zoom-category"> <!-- Add d-block and zoom-category classes -->
+                      
+                          <div class="discount-badge">
+                              <span>{{hot_deals_varients.discount_percentage}}% OFF</span>
+                          </div>
+                      
+                      <img src="{{hot_deals_varients.images.first.image.url}}" class="img-fluid" alt="{{ hot_deals_varients.product.name}}">
+                  </a>
+                  <h4 class="mt-3 text-center text-capitalize">{{hot_deals_varients.product.name}} - ({{ hot_deals_varients.color.color }})</h4>
+              </div>
+          {% endfor %}
+      </div>
+
+      <div class="container mt-5">
+        <h2 class="text-center mb-5">Best Sellers</h2>
+        <hr>
+        <div class="row">
+          {% for new_arrival_varients in new_arrival_varients %}
+              <div class="col-md-3 position-relative"> <!-- Add position-relative for absolute positioning of children -->
+                  <a href="" class="d-block zoom-category"> <!-- Add d-block and zoom-category classes -->
+                        {%if new_arrival_varients.discount_percentage%}
+                          <div class="discount-badge">
+                              <span>{{new_arrival_varients.discount_percentage}}% OFF</span>
+                          </div>
+                        {% endif %}
+                      <img src="{{new_arrival_varients.images.first.image.url}}" class="img-fluid" alt="{{ new_arrival_varients.product.name}}">
+                  </a>
+                  <h4 class="mt-3 text-center text-capitalize">{{new_arrival_varients.product.name}} - ({{ new_arrival_varients.color.color }})</h4>
+              </div>
+          {% endfor %}
+      </div>
     </div>
     
    

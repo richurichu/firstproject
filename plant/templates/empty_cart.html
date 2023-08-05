@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Display an image -->
+            <img src="https://i5.walmartimages.com/asr/b8071fb7-42d7-44fe-b636-56779f5415e3.efe1909416012c905effb12913033ce8.jpeg?odnWidth=612&odnHeight=612&odnBg=ffffff" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <!-- Add a beautiful text for an empty cart -->
+            <h2 class="text-center">Ops! Your cart is empty.</h2>
+            <!-- Add the "Continue Shopping" button -->
+            <a href="{% url 'cat' slug='all' %}" class="btn btn-success mt-3">Continue Shopping</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

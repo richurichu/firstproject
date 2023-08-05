@@ -1,0 +1,19 @@
+{% extends 'admin_base.html' %}
+{% block body %}
+{% load static %}
+
+<body>
+    <h1>Current Referral Details</h1>
+    
+    <p>Referral Program Description: {{ referral_program.description }}</p>
+    <p>Referrer Bonus Percentage: {{ referral_program.referrer_bonus_percentage }}</p>
+    <p>Referrer Max Bonus Amount: {{ referral_program.referrer_max_bonus_amount }}</p>
+    <p>Referee Bonus Percentage: {{ referral_program.referee_bonus_percentage }}</p>
+    <p>Referee Max Bonus Amount: {{ referral_program.referee_max_bonus_amount }}</p>
+
+    <!-- Edit Button -->
+    <a href="{% url 'edit_referral_program' %}" class="btn btn-primary">Edit</a>
+   
+</body>
+
+{% endblock %}

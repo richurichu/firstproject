@@ -41,11 +41,11 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Order Id</th>
-                                    <th scope="col">Payment Status</th>
+                                    <th scope="col">Order Status</th>
                                     <th scope="col">Payment Method</th>
                                     <th scope="col">Order Date</th>
                                     <th scope="col">Delivery Date</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,7 +58,7 @@
                                     <td>{{ order.delivery_date }}</td>
                                     <td>
                                         <a class="btn btn-success btn-inline" href="{% url 'order_view' order.id %}" role="button">View</a>
-                                        <a class="btn btn-danger btn-inline" href="{% url 'cancel_orderss' order.id %}" role="button">Cancel</a>
+                                        <!-- <a class="btn btn-danger btn-inline" href="{% url 'cancel_orderss' order.id %}" role="button">Cancel</a> -->
                                     </td>
                                 </tr>
                                 {% endfor %}

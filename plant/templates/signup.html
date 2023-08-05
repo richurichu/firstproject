@@ -45,6 +45,19 @@
                 
               </div>
 
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="typePasswordX">Referral code (optional)</label>
+                <input type="text" id="typePassword" name="referral_code" class="form-control form-control-lg" value="{{ referral_code }}" />
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+
+            
+
 
               <button class="btn btn-outline-light btn-lg px-5" type="submit">Signup</button>
 

@@ -22,7 +22,7 @@
           <p class="card-text"><strong>Postal Code:</strong> {{ address.postal_code }}</p>
           <p class="card-text"><strong>Country:</strong> {{ address.country }}</p>
           <div class="d-flex justify-content-between">
-            <a href="{% url 'edit_address'  address.id %}" class="btn btn-success">Edit</a>
+            <a href="{% url 'order_edit_address'  address.id %}" class="btn btn-success">Edit</a>
             <a href="{% url 'checkout'  address.id %}" class="btn btn-success">Use this Address</a>
             
           </div>

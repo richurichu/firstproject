@@ -1,0 +1,27 @@
+{% extends 'admin_base.html' %}
+{% block body %}
+{% load static %}
+
+<h1>Edit Referral Program</h1>
+<form method="post" action="{% url 'edit_referral_program' %}">
+    {% csrf_token %}
+    <label for="description">Referral Program Description:</label>
+    <textarea id="description" name="description" rows="4" cols="50" required>{{ referral_program.description }}</textarea>
+    <br>
+    <label for="referrer_bonus_percentage">Referrer Bonus Percentage:</label>
+    <input type="number" id="referrer_bonus_percentage" name="referrer_bonus_percentage" step="0.01" required value="{{ referral_program.referrer_bonus_percentage }}">
+    <br>
+    <label for="referrer_max_bonus_amount">Referrer Max Bonus Amount:</label>
+    <input type="number" id="referrer_max_bonus_amount" name="referrer_max_bonus_amount" step="0.01" required value="{{ referral_program.referrer_max_bonus_amount }}">
+    <br>
+    <label for="referee_bonus_percentage">Referee Bonus Percentage:</label>
+    <input type="number" id="referee_bonus_percentage" name="referee_bonus_percentage" step="0.01" required value="{{ referral_program.referee_bonus_percentage }}">
+    <br>
+    <label for="referee_max_bonus_amount">Referee Max Bonus Amount:</label>
+    <input type="number" id="referee_max_bonus_amount" name="referee_max_bonus_amount" step="0.01" required value="{{ referral_program.referee_max_bonus_amount }}">
+    <br>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+
+{% endblock %}

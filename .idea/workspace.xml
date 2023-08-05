@@ -1,22 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="929a1408-c997-4ee2-a2ea-1760fe62360e" name="Changes" comment="" />
+    <list default="true" id="929a1408-c997-4ee2-a2ea-1760fe62360e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/plant/adminside/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/adminside/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/adminside/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/adminside/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/adminside/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/adminside/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/authenticate/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/authenticate/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/authenticate/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/authenticate/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/authenticate/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/authenticate/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/authenticate/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/authenticate/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/cart/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/cart/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/cart/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/cart/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/cart/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/cart/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/cart/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/cart/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/orders/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/orders/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/orders/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/orders/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/orders/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/orders/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/orders/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/orders/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/plant/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/plant/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/store/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/store/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/store/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/store/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/store/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/store/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/add_address.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/add_address.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/admin_addcategory.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/admin_addcategory.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/admin_addproduct.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/admin_addproduct.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/admin_addvariant.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/admin_addvariant.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/admin_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/admin_base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/admin_catagory.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/admin_catagory.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/admin_editvariant.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/admin_editvariant.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/admin_order_all.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/admin_order_all.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/admin_order_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/admin_order_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/admin_products.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/admin_products.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/admin_productvarients.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/admin_productvarients.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/cart_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/cart_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/catagory.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/catagory.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/category_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/category_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/checkout.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/checkout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/customers.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/customers.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/edit_address.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/edit_address.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/orderaddress.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/orderaddress.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/orderplaced.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/orderplaced.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/ordertable.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/ordertable.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/orderview.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/orderview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/otp.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/otp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/product_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/product_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/show_address.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/show_address.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/templates/user_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/plant/templates/user_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/userprofile/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/userprofile/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/userprofile/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/userprofile/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/userprofile/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/userprofile/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plant/userprofile/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plant/userprofile/views.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2SbLGfZd0EewCaMsB3tQIGxMIEY" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

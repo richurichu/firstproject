@@ -14,7 +14,12 @@
                 </div>
                 <div class="form-group">
                     <label for="color">Color variant</label>
-                    <input type="text" class="form-control" id="color" name="color" required>
+                    <select class="form-control" id="color" name="color" required>
+                        <option value="" disabled selected>Select a color</option>
+                        {% for color in colours %}
+                            <option value="{{ color.color }}">{{ color.color }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="store_price">Store Price</label>
@@ -23,6 +28,10 @@
                 <div class="form-group">
                     <label for="sale_price">Sale Price</label>
                     <input type="number" class="form-control" id="sale_price" name="sale_price" required>
+                </div>
+                <div class="form-group">
+                    <label for="sale_price">Discount </label>
+                    <input type="number" class="form-control" id="Discount" name="Discount" required>
                 </div>
                 <div class="form-group">
                     <label for="stock">Stock</label>

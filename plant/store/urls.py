@@ -13,7 +13,7 @@ urlpatterns = [
     path('cat/<slug:slug>/',views.cat,name='cat'),
     path('product_detail/<slug:slug>/', views.product_detail, name='product_detail'),
     path('search',views.search,name='search'),
-  
+    path('autocomplete', views.autocomplete, name='autocomplete'),
 
 
 ]

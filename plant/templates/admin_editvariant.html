@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block body %}
+
 <div class="container-fluid product-edit-variant" style="margin-top: 130px; margin-bottom: 20px;">
     <div class="container-fluid">
         <div class="card">
@@ -15,12 +16,17 @@
                     </div>
                     <div class="mb-3">
                         <label for="model_number" class="form-label">Store price</label>
-                        <input type="text" class="form-control" id="store_price" name="store_price" value="{{ product.store_price }}">
+                        <input type="text" class="form-control" id="store_price" name="store_price" value="{{ productt.store_price }}">
                     </div>
                     <div class="mb-3">
                         <label for="dial_shape" class="form-label">Sale price</label>
                         <input type="text" class="form-control" id="sale_price" name="sale_price" value="{{ productt.sale_price }}">
                     </div>
+                    <div class="mb-3">
+                        <label for="Discount" class="form-label">Discount Percentage</label>
+                        <input type="number" class="form-control" id="Discount" name="Discount" value="{{ productt.discount_percentage }}" step="1">
+                    </div>
+                    
                     <div class="mb-3">
                         <label for="dial_shape" class="form-label">Stock</label>
                         <input type="number" class="form-control" id="stock" name="stock" value="{{ productt.stock }}">

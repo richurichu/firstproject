@@ -2,13 +2,19 @@
 {% block body %}
 {% load static %}
 
-<div class="container h-100" >
-    <div class="row justify-content-center mt-5" style="height: 400px;">
-      <div class="col-md-6 text-center">
-        <img src="https://www.primehairdepot.com/images/order_success_placed.gif" alt="Order Placed" class="img-fluid">
-        <h2 class="mt-3">Your order has been placed!</h2>
-      </div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Display an image -->
+            <img src="https://i0.wp.com/www.melbournecurrencyexchange.com/wp-content/uploads/order-confirmed.png?resize=500%2C500&ssl=1" alt="Image" class="img-fluid" style="height: 500px; width: 500px;">
+        </div>
+        <div class="col-md-6 d-flex flex-column align-items-center justify-content-center mt-5">
+            <!-- Add a beautiful text for an empty cart -->
+            <h2 class="text-center">Your order has been placed!</h2>
+            <!-- Add the "Continue Shopping" button -->
+            <a href="{% url 'cat' slug='all' %}" class="btn btn-success mt-3">Continue Shopping</a>
+        </div>
     </div>
-  </div>  
+</div>
 
 {% endblock %}

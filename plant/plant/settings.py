@@ -148,3 +148,8 @@ EMAIL_USE_TLS = True
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+RAZOR_KEY_ID='rzp_test_6N6QnVCL7CtHnZ'
+RAZOR_KEY_SECRET='7ps3IRks1XRAkgl11CJAvSP6'

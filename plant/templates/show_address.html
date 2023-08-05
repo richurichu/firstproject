@@ -3,9 +3,12 @@
 {% load static %}
 
 <div class="container py-5">
+  <div class="d-flex justify-content-end">
+      <a href="{% url 'add_address' %}" class="btn btn-success btn-lg">Add Address</a>
+  </div>
   <div class="row">
     {% for address in addresses %}
-    <div class="col-md-6 mb-4">
+    <div class="col-md-4 mb-4">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{ address.first_name }} {{ address.last_name }}</h5>
@@ -22,8 +25,8 @@
           <p class="card-text"><strong>Postal Code:</strong> {{ address.postal_code }}</p>
           <p class="card-text"><strong>Country:</strong> {{ address.country }}</p>
           <div class="d-flex justify-content-between">
-            <a href="{% url 'edit_address'  address.id %}" class="btn btn-primary">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
+            <a href="{% url 'edit_address'  address.id %}" class="btn btn-primary ">Edit</a>
+            <a href="{% url 'delete_address'  address.id %}" class="btn btn-danger">Delete</a>
           </div>
         </div>
       </div>
@@ -34,6 +37,7 @@
     {% endif %}
     {% endfor %}
   </div>
+  
 </div>
 
 {% endblock %}

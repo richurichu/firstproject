@@ -1,0 +1,24 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Add Colour</h1>
+    <form method="post" action="{% url 'add_coupon' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="colour" class="form-label">Enter Colour:</label>
+            <input type="text" id="code" name="colour" class="form-control" maxlength="50" required>
+        </div>
+
+        
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+
+
+
+{% endblock %}

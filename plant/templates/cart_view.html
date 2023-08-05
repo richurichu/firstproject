@@ -31,6 +31,7 @@
                     <th>Name</th>
                     <th>Price</th>
                     <th>Quantity</th>
+                    
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -43,7 +44,7 @@
                       </div>
                     </td>
                     <td>{{ carts.product.product.name }}-{{carts.product.color}}</td>
-                    <td>$ {{ carts.product.sale_price }}</td>
+                    <td> {{ carts.product.get_discounted_price.0|floatformat:"0" }}</td>
                     <td>
                       <div class="d-flex align-items-center">
                         <button class="btn btn-sm btn-light" onclick="decreaseQuantity('{{ carts.id }}');">-</button>
@@ -51,6 +52,10 @@
                         <button class="btn btn-sm btn-light" onclick="increaseQuantity('{{ carts.id }}','{{ carts.product.stock }}');">+</button>
                       </div>
                     </td>
+                    <!-- <td>
+                      <span id="price-{{ carts.id }}" class="item-price" data-quantity="{{ carts.quantity }}">{{ carts.product.get_discounted_price.0|floatformat:"0" }}</span>
+
+                    </td> -->
                     <td>
                       <form method="POST" action="{% url 'remove_from_cart'%}">
                         {% csrf_token %}
@@ -64,17 +69,25 @@
               </table>
             </div>
   
-            <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-              <div class="flex-w flex-m m-r-20 m-tb-5">
-                <input class="form-control bor13 pl-3 pr-2 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
-                <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-                  Apply Coupon
+            <form id="apply-coupon-form" method="post" class="form-inline d-flex align-items-center" action="{% url 'apply_coupon' %}">
+              {% csrf_token %}
+              <div class="form-group mr-5">
+                <label for="coupon">Available Coupons:</label>
+                <div class="d-flex align-items-center">
+                  <select class="form-control form-control-sm mr-5" id="coupon" name="coupon">
+                    <option value="">Select a coupon</option>
+                    {% for coupon in coupons %}
+                    
+                    <option value="{{ coupon.code }}" >
+                      <strong>{{ coupon.code }}</strong> - FLAT ({{ coupon.discount }} off) - Minimum-purchase {{ coupon.minimum_order_amount }}
+                  </option>
+                    {% endfor %}
+                  </select>
+                  <button type="submit" class="btn btn-success" style="height: 35px; width: 75px;">Apply</button>
                 </div>
               </div>
-              <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-                Update Cart
-              </div>
-            </div>
+            </form>
+          
           </div>
         </div>
   
@@ -82,17 +95,27 @@
           <div class="border rounded p-4">
             <h4 class="mtext-109 cl2 mb-4">Cart Totals</h4>
             <div class="d-flex justify-content-between mb-3">
-              <span class="stext-110 cl2">Subtotal:</span>
-              <span class="mtext-110 cl2">$ {{ total_price }}</span>
+              <span class="stext-110 cl2">Total price:</span>
+              <!-- <span class="mtext-110 cl2">{{ total_price|floatformat:"0" }}</span> -->
+              <div> <span id="total-cart-price">{{ total_price }}</span></div>
+
+            </div>
+            <!-- <div class="d-flex justify-content-between mb-3">
+              <span class="stext-110 cl2">Discount applied:</span>
+              <span class="mtext-110 cl2">{{discount|floatformat:"0"}}</span>
+            </div> -->
+            <div class="d-flex justify-content-between mb-3">
+              <span class="stext-101 cl2">Coupon Discount:</span>
+              <span id="coupon-discount" class="stext-110 cl2"></span>
+              
+              
+               
             </div>
             <div class="d-flex justify-content-between mb-3">
-              <span class="stext-110 cl2">Shipping:</span>
-              <span class="mtext-110 cl2">0 tax</span>
+              <span class="stext-101 cl2">Final Price:</span>
+              <span id="final-price" class="mtext-110 cl2">{{ total_price }}</span>
             </div>
-            <div class="d-flex justify-content-between">
-              <span class="stext-101 cl2">Total:</span>
-              <span class="mtext-110 cl2">$ {{ total_price }}</span>
-            </div>
+            <!-- coupon_applied_total -->
             <div class="mt-4">
               {% if total_price == 0 %}
               <a href="" class="btn btn-lg btn-primary btn-block">Shop more</a>
@@ -110,61 +133,119 @@
 
 
 
-<script>
-  function updateQuantity(productId, quantity) {
-    $.ajax({
-      type: "POST",
-      url: "/update_quantity",  // Replace with the actual URL of your Django view
-      headers: { "X-CSRFToken": "{{ csrf_token }}" }, // Add this line to include the CSRF token
-      data: {
-          product_id: productId,
-          quantity: quantity
-        },
-        dataType: 'json',  // Expect JSON response from the server
-        success: function(response) {
-            console.log(response.price);
-            console.log(response.quantity);
-            if (response.success) {
-                // Update the displayed quantity and price
-                $("#price-" + productId).text(response.price);
-          $("#quantity-" + productId).text(response.quantity);
-          console.log("Quantity updated successfully!");
-          location.reload()
-        } else {
-          console.log("Quantity update failed:", response.message);
-        }
-      },
-      error: function(xhr, errmsg, err) {
-        console.log("Error updating quantity:", errmsg);
-      }
-    });
-}
+  <script>
+    function updateQuantity(productId, quantity) {
+        $.ajax({
+            type: "POST",
+            url: "/update_quantity",
+            headers: { "X-CSRFToken": "{{ csrf_token }}" },
+            data: {
+                product_id: productId,
+                quantity: quantity
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log(response.price);
+                console.log(response.quantity);
+                if (response.success) {
+                    var pricePerItem = parseFloat(response.price);
+                    var quantity = parseInt(response.quantity);
+                    var totalPriceForItem = pricePerItem * quantity;
+                    $("#price-" + productId).text(totalPriceForItem.toFixed(2)); // update the price on the page
+                    $("#qty" + productId).val(response.quantity);
+                    console.log("Quantity updated successfully!");
 
-function decreaseQuantity(productId) {
-  var inputField = $("#qty" + productId);
-  var currentValue = parseInt(inputField.val());
-  if (currentValue > 1) {
-    var newValue = currentValue - 1;
-    inputField.val(newValue);
-    updateQuantity(productId, newValue);
-  }
-}
-
-function increaseQuantity(productId, stock) {
-    var effect = document.getElementById('qty' + productId);
-    var qty = parseInt(effect.value);
-  
-    if (!isNaN(qty) && qty < stock && qty < 10) {
-      qty++;
-      effect.value = qty;
-      updateQuantity(productId, qty);
-    } else {
-      alert("Maximum stock limit reached."); // Display a message when the maximum stock limit is reached
+                    // Update the total cart price on the page
+                    console.log("Updated total price:", response.total_price);
+                    $("#total-cart-price").text(response.total_price); // replace yourHtmlElementSelector with your actual HTML element selector
+                    $("#final-price").text(response.total_price);
+                    $("#coupon-discount").text(0); 
+                } else {
+                    console.log("Quantity update failed:", response.message);
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                console.log("Error updating quantity:", errmsg);
+            }
+        });
     }
-  }
 
-</script> 
+    function decreaseQuantity(productId) {
+        var inputField = $("#qty" + productId);
+        var currentValue = parseInt(inputField.val());
+        if (currentValue > 1) {
+            var newValue = currentValue - 1;
+            inputField.val(newValue);
+            updateQuantity(productId, newValue);
+        }
+    }
 
+    function increaseQuantity(productId, stock) {
+        var effect = document.getElementById('qty' + productId);
+        var qty = parseInt(effect.value);
+
+        if (!isNaN(qty) && qty < stock && qty < 10) {
+            qty++;
+            effect.value = qty;
+            updateQuantity(productId, qty);
+        } else {
+            alert("Maximum stock limit reached.");
+        }
+    }
+
+    $(document).ready(function() {
+        console.log('Document is ready!');
+        // No need to call updateTotalPrice at document ready because
+        // the total price will be updated when quantity is updated.
+    });
+</script>
+<script>
+  $(document).ready(function() {
+    // Initialize the final price to be the total price
+    var totalPrice = $("#total-cart-price").text();
+    $("#final-price").text(totalPrice);
+
+    // Attach a submit event handler to the form
+    $("#apply-coupon-form").submit(function(e) {
+        // Prevent the default form submission
+        e.preventDefault();
+
+        // Get the selected coupon code
+        var couponCode = $("#coupon").val();
+        console.log('Coupon code: ', couponCode);
+
+        // Call the applyCoupon function
+        applyCoupon(couponCode);
+    });
+
+    function applyCoupon(couponCode) {
+        // Make an AJAX POST request to apply the coupon
+        $.ajax({
+            type: "POST",
+            url: "/apply_coupon",
+            headers: { "X-CSRFToken": "{{ csrf_token }}" },
+            data: {
+                coupon_code: couponCode  // Change 'coupon' to 'coupon_code'
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log("Coupon applied:", response.coupon_code);
+                if (response.success) {
+                    // Update the final price on the page
+                    console.log("Updated final price:", response.final_price);
+                    $("#final-price").text(response.final_price);
+                    $("#coupon-discount").text(  response.coupon_discount);
+                } else {
+                    console.log("Failed to apply coupon:", response.message);
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                console.log("Error applying coupon:", errmsg);
+            }
+        });
+    }
+});
+  </script>
 
 
 {% endblock %}
